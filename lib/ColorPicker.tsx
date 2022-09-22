@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {
   GestureHandlerRootView,
@@ -6,6 +6,7 @@ import {
   TapGestureHandler,
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+
 import Animated, {
   interpolateColor,
   runOnJS,
@@ -15,46 +16,46 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {decimalToHexString, DEFAULT_PALETTE} from './constants';
 
 interface Props {
-  colors: Array<string>;
-  start?: string;
-  end?: string;
+  colors?: Array<string>;
   styles?: StyleProp<ViewStyle> | undefined;
-  maxWidth: number;
-  onColorChange: (color: string) => void;
+  onColorChange: (dec: string, hex: string, initial: number) => void;
   cicrleSize?: number;
+  initial?: number;
 }
 
 const ColorPicker = ({
   colors,
-  start,
-  end,
   styles,
-  maxWidth,
   onColorChange,
   cicrleSize,
+  initial,
 }: Props) => {
+  // Defs
   const PICKER_SIZE = cicrleSize || 25;
   const INTERNAL_PICKER = PICKER_SIZE * 0.8;
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const active = useSharedValue(0);
-  const defaultStyles = {
-    width: maxWidth - PICKER_SIZE,
-    height: 40,
-    borderRadius: 5,
-  };
+  const colorPalette = colors || DEFAULT_PALETTE;
+  useEffect(() => {
+    if (initial) {
+      translateX.value = Number(initial);
+    }
+  }, []);
   const onChange = useCallback(
     (color: string) => {
-      onColorChange(color);
+      const hex = decimalToHexString(color);
+      onColorChange(hex, color, translateX.value);
     },
-    [onColorChange],
+    [onColorChange, translateX.value],
   );
   const scale = useSharedValue(1);
   const adjustTranslateX = useDerivedValue(() => {
-    return Math.min(Math.max(translateX.value, 0), maxWidth - PICKER_SIZE);
-  });
+    return Math.min(Math.max(translateX.value, 0), styles.width);
+  }, [translateX]);
   const onEnd = useCallback(() => {
     'worklet';
     translateY.value = withTiming(0);
@@ -63,9 +64,9 @@ const ColorPicker = ({
   }, []);
   const panGestureEevent = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
-      ctx['translateX'] = adjustTranslateX.value;
+      ctx['translateX'] = _.x;
       translateY.value = withTiming(-PICKER_SIZE);
-      scale.value = withTiming(1.2);
+
       active.value = withTiming(1);
     },
     onActive: (event, ctx) => {
@@ -77,9 +78,9 @@ const ColorPicker = ({
 
   const tapGestureEvent = useAnimatedGestureHandler({
     onStart: event => {
-      translateY.value = withTiming(-PICKER_SIZE);
-      scale.value = withTiming(1.2);
-      translateX.value = withTiming(event.absoluteX - PICKER_SIZE);
+      translateY.value = withTiming(-(styles.height / 2) - PICKER_SIZE);
+
+      translateX.value = withTiming(event.x);
       active.value = withTiming(1);
     },
     onEnd,
@@ -89,7 +90,6 @@ const ColorPicker = ({
     return {
       transform: [
         {translateX: adjustTranslateX.value},
-        {scale: scale.value},
         {
           translateY: translateY.value,
         },
@@ -103,13 +103,13 @@ const ColorPicker = ({
   });
 
   const rInternal = useAnimatedStyle(() => {
-    const inputRange = colors.map(
-      (_, index) => (index / colors.length) * maxWidth,
+    const inputRange = colorPalette.map(
+      (_, index) => ((index + 1) / colorPalette.length) * styles.width || 270,
     );
     const backgroundColor = interpolateColor(
       translateX.value,
       inputRange,
-      colors,
+      colorPalette,
     );
     runOnJS(onChange)(backgroundColor);
     return {
@@ -145,21 +145,21 @@ const ColorPicker = ({
       borderTopWidth: INTERNAL_PICKER / 2,
       borderLeftColor: 'transparent',
       borderRightColor: 'transparent',
-      borderColor: '#FFF',
+      borderTopColor: '#FFF',
     },
   });
 
   return (
     <GestureHandlerRootView>
-      <TapGestureHandler onGestureEvent={tapGestureEvent}>
+      <TapGestureHandler onGestureEvent={tapGestureEvent as any}>
         <Animated.View>
-          <PanGestureHandler onGestureEvent={panGestureEevent}>
+          <PanGestureHandler onGestureEvent={panGestureEevent} minDist={0}>
             <Animated.View style={{justifyContent: 'center'}}>
               <LinearGradient
-                colors={colors}
-                start={start || {x: 0, y: 0}}
-                end={end || {x: 1, y: 0}}
-                style={styles || defaultStyles}
+                colors={colorPalette}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                style={styles}
               />
               <Animated.View style={[compStyles.picker, rStyle]}>
                 <Animated.View style={[compStyles.internalPicker, rInternal]} />
