@@ -1,6 +1,6 @@
 {
   "name": "@bayramitto/react-native-colorpicker",
-  "version": "1.0.14",
+  "version": "1.0.18",
   "description": "React Native Color Picker is a basic color picker from your favorite color palette.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Bayramito/react-native-colorpicker#readme"
+    "url": "https://github.com/Bayramito/react-native-colorpicker"
   },
   "keywords": [
     "react-native",
@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/Bayramito/react-native-colorpicker/issues"
   },
-  "homepage": "https://github.com/Bayramito/react-native-colorpicker#readne",
+  "homepage": "https://github.com/Bayramito/react-native-colorpicker#readme",
   "devDependencies": {
     "react": "18.1.0",
     "react-native": "0.70.1",

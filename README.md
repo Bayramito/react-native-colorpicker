@@ -4,7 +4,7 @@
 
 ## Description
 IMPORTANT! <br>
-With this picker you can get the color code output in Reanimated format, then you can use it any other `Animated` component via `useAnimatedStyle` in Reanimated 2.
+With this picker you can get the HEX/DEC color codes of your selected color, you can set your own color palette and use them wherever you wish.
 
 ## Demo
 https://user-images.githubusercontent.com/44513402/191630954-f5b720a9-c94c-4e47-9882-799037860f23.mp4
@@ -61,7 +61,7 @@ const App = () => {
 
 | Prop  | Default  | Type | Description |
 | :------------ |:---------------:| :---------------:| :-----|
-| colors | - | `Array`   | You can define your own color palette in Array of HEX codes eg. ["#fa3261","#c9a221] 
+| colors | - | `Array`   | You can define your own color palette in Array of HEX codes eg. ["#fa3261","#c9a221"] 
 | style (Required) | - | `object` | Specify the style of the ColorPicker. ( `width` and `height` values REQUIRED ) |
 | onColorChange| - |`callback`| Returns set of arguments that you can use.
 initial| - | number | initial position of the circle. (You can get and store it as third argument on `onColorChange`)
