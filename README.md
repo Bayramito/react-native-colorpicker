@@ -7,8 +7,7 @@ IMPORTANT! <br>
 With this picker you can get the color code output in Reanimated format, then you can use it any other `Animated` component via `useAnimatedStyle` in Reanimated 2.
 
 ## Demo
-https://user-images.githubusercontent.com/44513402/191626194-c2a23aad-002d-4388-871f-fc1dffd8f774.mp4
-
+https://user-images.githubusercontent.com/44513402/191630954-f5b720a9-c94c-4e47-9882-799037860f23.mp4
 
 ## Installation
 
@@ -23,7 +22,7 @@ import ColorPicker from "@bayramitto/react-native-colorpicker";
 ```
 
 ```javascript
-const backgroundColor = useSharedValue(styledColors[0]);
+const backgroundColor = useSharedValue("#17203A");
 const containerAnimatedStyle = useAnimatedStyle(() => ({
       backgroundColor: backgroundColor.value,
     }));
