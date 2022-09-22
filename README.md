@@ -9,16 +9,26 @@ With this picker you can get the color code output in Reanimated format, then yo
 ## Demo
 https://user-images.githubusercontent.com/44513402/191630954-f5b720a9-c94c-4e47-9882-799037860f23.mp4
 
+## Note
+Make sure you have following packages installed on your project.
+```
+npm i react-native-linear-gradient
+npm i react-native-reanimated
+npm i react-native-gesture-handler
+```
+
 ## Installation
 
 ```
-npm i @bayramitto/react-native-colorpicker
+npm i @bayramitto/react-native-colorpicker 
 ```
 
 ## Usage
 
 ```javascript
 import ColorPicker from "@bayramitto/react-native-colorpicker";
+import Animated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import {StyleSheet} from 'react-native';
 ```
 
 ```javascript
@@ -26,27 +36,39 @@ const backgroundColor = useSharedValue("#17203A");
 const containerAnimatedStyle = useAnimatedStyle(() => ({
       backgroundColor: backgroundColor.value,
     }));
-<Animated.View style={[styles.container, containerAnimatedStyle]}>
-  <ColorPicker
-      colors={[ "#17203A","#fd79a8",
-                "#8e44ad","#10ac84",
-                "#8395a7","#ecf0f1",
-                "#ff9ff3","#2e86de",
-                "#fdcb6e","#00cec9",
-                ]}
-      styles={{
-        width: 270,
-        height: 10,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: "#fff",
-       }}
-      maxWidth={270}
-      onColorChange={color => {
-       backgroundColor.value = color;
-      }}
-  />
-</Animated.View>
+
+    const styles = StyleSheet.create({
+      container:{
+        width:250,
+        height:10,
+        borderRadius:5,
+        
+      }
+    });
+
+return(
+      <Animated.View style={[styles.container, containerAnimatedStyle]}>
+      <ColorPicker
+          colors={[ "#17203A","#fd79a8",
+                    "#8e44ad","#10ac84",
+                    "#8395a7","#ecf0f1",
+                    "#ff9ff3","#2e86de",
+                    "#fdcb6e","#00cec9",
+                    ]}
+          styles={{
+            width: 270,
+            height: 10,
+            borderRadius: 20,
+            borderWidth: 1,
+            borderColor: "#fff",
+          }}
+          maxWidth={270}
+          onColorChange={color => {
+          backgroundColor.value = color;
+          }}
+      />
+    </Animated.View>
+)
 ```
 
 ## Properties

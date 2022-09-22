@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler, } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { interpolateColor, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming, } from 'react-native-reanimated';
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const ColorPicker = ({ colors, start, end, styles, maxWidth, onColorChange, cicrleSize, }) => {
     const PICKER_SIZE = cicrleSize || 25;
     const INTERNAL_PICKER = PICKER_SIZE * 0.8;

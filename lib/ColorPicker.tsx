@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
@@ -18,14 +18,14 @@ import Animated, {
 
 interface Props {
   colors: Array<string>;
-  start: string;
-  end: string;
-  styles: string;
+  start?: string;
+  end?: string;
+  styles?: StyleProp<ViewStyle> | undefined;
   maxWidth: number;
   onColorChange: (color: string) => void;
-  cicrleSize: number;
+  cicrleSize?: number;
 }
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+
 const ColorPicker = ({
   colors,
   start,
