@@ -16,7 +16,6 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
     const didChange = useCallback((val) => {
         const hex = decimalToHexString(val);
         onColorChanged(hex);
-        console.log(styles.width, hex, val);
     }, [onColorChanged]);
     const onChange = useCallback((color) => {
         onColorChanging(color);
@@ -28,7 +27,9 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
         'worklet';
         translateY.value = withTiming(0);
         active.value = 0;
-        runOnJS(didChange)(background.value);
+        if (onColorChanged) {
+            runOnJS(didChange)(background.value);
+        }
     }, []);
     const panGestureEevent = useAnimatedGestureHandler({
         onStart: (_, ctx) => {
@@ -68,7 +69,9 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
     const rInternal = useAnimatedStyle(() => {
         const inputRange = colorPalette.map((_, index) => ((index + 1) / colorPalette.length) * styles.width);
         const backgroundColor = interpolateColor(translateX.value, inputRange, colorPalette);
-        runOnJS(onChange)(backgroundColor);
+        if (onColorChanging) {
+            runOnJS(onChange)(backgroundColor);
+        }
         if (onColorChanged) {
             background.value = backgroundColor;
         }
