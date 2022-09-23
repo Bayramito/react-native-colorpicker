@@ -1,35 +1,34 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler, } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { interpolateColor, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming, } from 'react-native-reanimated';
 import { decimalToHexString, DEFAULT_PALETTE } from './constants';
-const ColorPicker = ({ colors, styles, onColorChange, cicrleSize, initial, }) => {
+const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSize, }) => {
     // Defs
     const PICKER_SIZE = cicrleSize || 25;
     const INTERNAL_PICKER = PICKER_SIZE * 0.8;
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
+    const background = useSharedValue('');
     const active = useSharedValue(0);
     const colorPalette = colors || DEFAULT_PALETTE;
-    useEffect(() => {
-        if (initial) {
-            translateX.value = Number(initial);
-        }
-    }, []);
+    const didChange = useCallback((val) => {
+        const hex = decimalToHexString(val);
+        onColorChanged(hex);
+        console.log(styles.width, hex, val);
+    }, [onColorChanged]);
     const onChange = useCallback((color) => {
-        const hex = decimalToHexString(color);
-        onColorChange(hex, color, translateX.value);
-    }, [onColorChange, translateX.value]);
-    const scale = useSharedValue(1);
+        onColorChanging(color);
+    }, [onColorChanging]);
     const adjustTranslateX = useDerivedValue(() => {
         return Math.min(Math.max(translateX.value, 0), styles.width);
     }, [translateX]);
     const onEnd = useCallback(() => {
         'worklet';
         translateY.value = withTiming(0);
-        scale.value = withTiming(1);
         active.value = 0;
+        runOnJS(didChange)(background.value);
     }, []);
     const panGestureEevent = useAnimatedGestureHandler({
         onStart: (_, ctx) => {
@@ -67,9 +66,12 @@ const ColorPicker = ({ colors, styles, onColorChange, cicrleSize, initial, }) =>
         };
     });
     const rInternal = useAnimatedStyle(() => {
-        const inputRange = colorPalette.map((_, index) => ((index + 1) / colorPalette.length) * styles.width || 270);
+        const inputRange = colorPalette.map((_, index) => ((index + 1) / colorPalette.length) * styles.width);
         const backgroundColor = interpolateColor(translateX.value, inputRange, colorPalette);
         runOnJS(onChange)(backgroundColor);
+        if (onColorChanged) {
+            background.value = backgroundColor;
+        }
         return {
             backgroundColor,
         };

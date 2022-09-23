@@ -2,9 +2,10 @@ import { StyleProp, ViewStyle } from 'react-native';
 interface Props {
     colors?: Array<string>;
     styles?: StyleProp<ViewStyle> | undefined;
-    onColorChange: (dec: string, hex: string, initial: number) => void;
+    onColorChanged: (hex: string) => void;
+    onColorChanging?: (dec: string) => void;
     cicrleSize?: number;
-    initial?: number;
+    initial?: number | string;
 }
-declare const ColorPicker: ({ colors, styles, onColorChange, cicrleSize, initial, }: Props) => any;
+declare const ColorPicker: ({ colors, styles, onColorChanging, onColorChanged, cicrleSize, }: Props) => any;
 export default ColorPicker;
