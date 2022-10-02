@@ -18,7 +18,8 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
         onColorChanged(hex);
     }, [onColorChanged]);
     const onChange = useCallback((color) => {
-        onColorChanging(color);
+        const hex = decimalToHexString(color);
+        onColorChanging(hex);
     }, [onColorChanging]);
     const adjustTranslateX = useDerivedValue(() => {
         return Math.min(Math.max(translateX.value, 0), styles.width);
