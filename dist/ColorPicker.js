@@ -110,12 +110,13 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
             borderTopColor: '#FFF',
         },
     });
+    const locations = colorPalette.map((_, index) => ((index + 1) / colorPalette.length));
     return (React.createElement(GestureHandlerRootView, null,
         React.createElement(TapGestureHandler, { onGestureEvent: tapGestureEvent },
             React.createElement(Animated.View, null,
                 React.createElement(PanGestureHandler, { onGestureEvent: panGestureEevent, minDist: 0 },
                     React.createElement(Animated.View, { style: { justifyContent: 'center' } },
-                        React.createElement(LinearGradient, { colors: colorPalette, start: { x: 0, y: 0 }, end: { x: 1, y: 0 }, style: styles }),
+                        React.createElement(LinearGradient, { colors: colorPalette, start: { x: 0, y: 0 }, end: { x: 1, y: 0 }, locations:locations, style: styles }),
                         React.createElement(Animated.View, { style: [compStyles.picker, rStyle] },
                             React.createElement(Animated.View, { style: [compStyles.internalPicker, rInternal] }),
                             React.createElement(Animated.View, { style: [compStyles.arrow, arrowStyle] }))))))));
