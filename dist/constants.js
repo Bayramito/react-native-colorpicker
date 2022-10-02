@@ -11,9 +11,9 @@ export const DEFAULT_PALETTE = [
     '#00cec9',
 ];
 export const decimalToHexString = (number) => {
-    // if (number < 0) {
-    //   number = 0xffffffff + number + 1;
-    // }
+    if (number < 0) {
+      number = 0xffffffff + number + 1;
+    }
     return `#${number.toString(16).substring(2, 8)}`;
 };
 export const hexStringToDecimal = (hex) => {
