@@ -46,10 +46,13 @@ const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSi
     const tapGestureEvent = useAnimatedGestureHandler({
         onStart: event => {
             translateY.value = withTiming(-(styles.height / 2) - PICKER_SIZE);
-            translateX.value = withTiming(event.x);
+            translateX.value = withTiming(event.x, {}, (finished) => {
+                if (finished) {
+                    onEnd();
+                }
+            });
             active.value = withTiming(1);
         },
-        onEnd,
     });
     const rStyle = useAnimatedStyle(() => {
         return {
