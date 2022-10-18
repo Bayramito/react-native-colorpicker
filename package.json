@@ -1,6 +1,6 @@
 {
   "name": "@bayramitto/react-native-colorpicker",
-  "version": "1.0.22",
+  "version": "1.0.25",
   "description": "React Native Color Picker is a basic color picker from your favorite color palette.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

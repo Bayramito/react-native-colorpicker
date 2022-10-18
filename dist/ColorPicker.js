@@ -4,7 +4,7 @@ import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler, } from 'r
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { interpolateColor, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming, } from 'react-native-reanimated';
 import { decimalToHexString, DEFAULT_PALETTE } from './constants';
-const ColorPicker = ({ colors, styles, onColorChanging, onColorChanged, cicrleSize, }) => {
+const ColorPicker = ({ colors, styles, onColorChanging = () => { }, onColorChanged = () => { }, cicrleSize, }) => {
     // Defs
     const PICKER_SIZE = cicrleSize || 25;
     const INTERNAL_PICKER = PICKER_SIZE * 0.8;
