@@ -6,8 +6,8 @@
 IMPORTANT! <br>
 With this picker you can get the HEX/DEC color codes of your selected color, you can set your own color palette and use them wherever you wish.
 
-## Demo
-https://user-images.githubusercontent.com/44513402/191630954-f5b720a9-c94c-4e47-9882-799037860f23.mp4
+## Preview
+![ezgif-3-4c9d63a9eb](https://github.com/Bayramito/react-native-colorpicker/assets/44513402/10caf76c-d821-4ef1-b308-33cc2b1add99)
 
 ## Note
 Make sure you have following packages installed on your project.
